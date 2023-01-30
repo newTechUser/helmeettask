@@ -1,71 +1,90 @@
-import {Formik,Form,Field} from "formik"
-import { useState } from "react";
+import {Formik,Form,Field} from "formik";
+import { useState } from 'react';
 
-
-export const Contactall=()=>{
-    const [todos,setTodos] = useState([])
-
-    return(
-        <div>
-            <h3>Contact All</h3>
-
-
-            <Formik
-            initialValues={{
-                Name:"",
-                Lastname:"",
-                Email:"",
-                About:"",
-                PhoneNumber:null
+function Contactall() {
+   const [todos,settodos] = useState([])
+   
+   return (
+    <div className='App'>
+        <Formik
+            initialValues={
+            {
+                name:"",
+                lastName:"",
+                email:"",
+                about:"",
+                phoneNumber:""
             }
-        }
-        onSubmit={values=>{
-            console.log(values)   
-            setTodos(...todos,values)
-            console.log(todos);  
-        }}
-            >
-                {
-                    
-                        <>
-                            <Form>
-                                <Field type="text" name="Name"/><br/><br/>
-                                <Field type="text" name="Lastname"/><br/><br/>
-                                <Field type="email" name="Email"/><br/><br/>
-                                <Field type="text" name="About"/><br/><br/>
-                                <Field type="tel" name="PhoneNumber"/><br/><br/>  
-
-                                <button type="Submit">Send</button>
-                            </Form>
-
-                            <span style={{paddingRight:'50px'}}>Name:</span>
-                            <span style={{paddingRight:'50px'}}>lastName:</span>
-                            <span style={{paddingRight:'50px'}}>Email:</span>
-                            <span style={{paddingRight:'50px'}}>About:</span>
-                            <span style={{paddingRight:'50px'}}>PhoneNumber:</span>
-
-                            
-                            <ul style={{display:'flex',gap:'50px'}}>
-                                {todos.map((values)=>(
-                                        <>
-                                            <li>{values.Name}</li>
-                                            <li>{values.Lastname}</li>
-                                            <li>{values.Email}</li>
-                                            <li>{values.About}</li>
-                                            <li>{values.PhoneNumber}</li>
-                                        </>
-                                ))}
-                            </ul>
             
-                        </>
-                    
+            }
+            onSubmit={(values,{resetForm})=>{
+                if(values.name!=='' && values.lastName!=='' && values.email!=='' && values.about!=='' && values.phoneNumber!==''){
+                    settodos ([...todos,values])
                 }
-
-                
+                else{
+                    alert("inputlari doldur")
+                }
+                resetForm({values:''})
+            }}
+            >
+            {
+                ({values}) =>(
+                <Form>
+                    <h4>Name</h4>
+                        <Field name ="name" className="field"/>
+                        <br/>
+                        <h4>LastName</h4>
+                        
+                        <Field name ="lastName"className="field"/>
+                        <br/>
+                        <h4>Email</h4>
                     
-                
-            </Formik>
-
+                        <Field name ="email"className="field"/>
+                        <br/>
+                        <h4>About</h4>
+                        
+                        <Field  name="about"className="field"
+                        />
+                        <br/>
+                        <h4> Phone number</h4>
+                        
+                        <Field name ="phoneNumber"className="field"
+                        />
+                        <br/><br/>
+                        <button className='btn bt-danger'  type='Submit'>Add</button>
+            
+                </Form>
+                )
+            }
+        </Formik>
+ 
+        <div className='tab'>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                        <th>About</th>
+                        <th>Phone number</th>
+                    </tr>
+                </thead>
+                {
+                todos.map((user)=>
+                    <tbody key={user.phoneNumber}>
+                    <tr key={user.phoneNumber}>
+                        <td>{user.name}</td>
+                        <td>{user.lastName}</td>
+                        <td>{user.email}</td>
+                        <td>{user.about}</td>
+                        <td>{user.phoneNumber}</td>
+                    </tr>
+                    </tbody>
+                )}  
+            </table>
         </div>
-    );
+    </div>
+   );
 }
+
+export default Contactall;
