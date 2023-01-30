@@ -1,7 +1,5 @@
 import { Helmet } from 'react-helmet';
-
-import { Contactall } from './Contactall';
-
+import Contactall  from './Contactall.js';
 
 function App() {
 
